@@ -6,7 +6,14 @@
 /*   By: sujeon <sujeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 11:43:44 by sujeon            #+#    #+#             */
-/*   Updated: 2020/11/04 11:43:46 by sujeon           ###   ########.fr       */
+/*   Updated: 2020/11/07 14:35:38 by sujeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+# ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
+
+#include <unistd.h>
+#include <stdlib.h>
+
+#endif
