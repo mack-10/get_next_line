@@ -6,7 +6,7 @@
 /*   By: sujeon <sujeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 11:40:31 by sujeon            #+#    #+#             */
-/*   Updated: 2020/11/07 15:21:45 by sujeon           ###   ########.fr       */
+/*   Updated: 2020/11/07 18:58:49 by sujeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,45 +16,80 @@
 #include <fcntl.h>	//open
 #include <stdio.h>	//printf
 
-int		get_next_line(int fd, char **line)
+static int	cnt_len(char *str)
 {
-	static int	idx1;
-	int			idx2;
-	char		tmp[SIZE];
-	int 		len;
-	int			cnt;
+	int len;
 
 	len = 0;
+	while (*str)
+	{
+		if (*str == '\n')
+			break ;
+		str++;
+		len++;
+	}
+	return (len);
+}
+
+static int	cnt_str(char *str)
+{
+	int cnt;
+
 	cnt = 0;
-	idx2 = 0;
-	if (!idx1)
+	while (*str)
 	{
-		if (read(fd, &tmp, SIZE) < 0)
+		if (*str == '\n')
+			cnt++;
+		str++;
+	}
+	cnt++;
+	return (cnt);
+}
+
+int			get_next_line(int fd, char **line)
+{
+	static int	idx;
+	char		str[SIZE];
+	int			cnt;
+	char *tmp;
+
+	cnt = 0;
+	tmp = str;
+	if (!idx)
+	{
+		if (read(fd, str, SIZE) < 0)
 			return (0);
-		//printf("tmp: %s\n", tmp);
-		/*if (!(line = (char **)malloc(sizeof(char *) * cnt + 1)))
-			return (0);*/
+		cnt = cnt_str(str);
+		if (!(line = (char **)malloc(sizeof(char *) * cnt + 1)))
+			return (0);
 	}
-	/*
-	while (line[idx1][idx2] != '\n' && line[idx1][idx2])
+	printf("\nidx: %d\n", idx);
+	cnt = 0;
+	while (idx != cnt)
 	{
-		line[idx1][idx2] = *tmp;
-		idx2++;
+		tmp = ft_strchr(str, '\n');
 		tmp++;
+		cnt++;
 	}
-	printf("len: %d\n", len);
-	if (!(line[idx1] = (char *)malloc(sizeof(char) * len + 1)))
+	printf("tmp: %s\n", tmp);
+	cnt = cnt_len(tmp);
+	printf("cnt: %d\n", cnt);
+	if (!(line[idx] = ft_substr(tmp, 0, cnt)))
 		return (0);
-	*/
+	printf("line[idx]: %s\n", line[idx]);
+	idx++;
+	return (1);
 }
 
 int main()
 {
 	int		fd;
 	char	**line;
+	int		i = 5;
 
+	line = 0;
 	fd = open("test", O_RDONLY);
-	get_next_line(fd, line);
-	while (1)
-		;
+	while (i--)
+		get_next_line(fd, line);
+	
 }
