@@ -6,12 +6,11 @@
 /*   By: sujeon <sujeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 11:40:31 by sujeon            #+#    #+#             */
-/*   Updated: 2020/11/07 18:58:49 by sujeon           ###   ########.fr       */
+/*   Updated: 2020/11/08 17:07:47 by sujeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#define	SIZE 100
 
 #include <fcntl.h>	//open
 #include <stdio.h>	//printf
@@ -49,7 +48,7 @@ static int	cnt_str(char *str)
 int			get_next_line(int fd, char **line)
 {
 	static int	idx;
-	char		str[SIZE];
+	char		str[BUFFER_SIZE];
 	int			cnt;
 	char *tmp;
 
@@ -57,7 +56,7 @@ int			get_next_line(int fd, char **line)
 	tmp = str;
 	if (!idx)
 	{
-		if (read(fd, str, SIZE) < 0)
+		if (read(fd, str, BUFFER_SIZE) < 0)
 			return (0);
 		cnt = cnt_str(str);
 		if (!(line = (char **)malloc(sizeof(char *) * cnt + 1)))
@@ -88,7 +87,7 @@ int main()
 	int		i = 5;
 
 	line = 0;
-	fd = open("test", O_RDONLY);
+	fd = open("test.txt", O_RDONLY);
 	while (i--)
 		get_next_line(fd, line);
 	
