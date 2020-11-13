@@ -6,16 +6,17 @@
 /*   By: sujeon <sujeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 11:43:44 by sujeon            #+#    #+#             */
-/*   Updated: 2020/11/07 18:09:41 by sujeon           ###   ########.fr       */
+/*   Updated: 2020/11/13 11:45:08 by sujeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-#include <unistd.h>
-#include <stdlib.h>
+#include <unistd.h>	//write, read
+#include <stdlib.h>	//malloc, free
 
+int			get_next_line(int fd, char **line);
 char	*ft_strchr(const char *s, int c);
 size_t	ft_strlen(const char *str);
 char	*ft_strdup(const char *s);
