@@ -6,7 +6,7 @@
 /*   By: sujeon <sujeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/07 17:17:56 by sujeon            #+#    #+#             */
-/*   Updated: 2020/11/13 13:41:20 by sujeon           ###   ########.fr       */
+/*   Updated: 2020/11/13 15:07:26 by sujeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,25 +38,6 @@ char	*ft_strchr(const char *s, int c)
 	return (0);
 }
 
-char	*ft_strdup(const char *s)
-{
-	int		size;
-	int		idx;
-	char	*new_str;
-
-	idx = 0;
-	size = ft_strlen(s);
-	if (!(new_str = (char *)malloc(sizeof(char) * (size + 1))))
-		return (NULL);
-	while (idx < size)
-	{
-		new_str[idx] = s[idx];
-		idx++;
-	}
-	new_str[idx] = 0;
-	return (new_str);
-}
-
 size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {
 	size_t		idx;
@@ -75,4 +56,17 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 	}
 	dst[idx] = 0;
 	return (src_len);
+}
+
+void	*ft_memset(void *b, int c, size_t len)
+{
+	size_t i;
+
+	i = 0;
+	while (i < len)
+	{
+		*((unsigned char *)b + i) = c;
+		i++;
+	}
+	return (b);
 }
