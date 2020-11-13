@@ -6,17 +6,11 @@
 /*   By: sujeon <sujeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 11:40:31 by sujeon            #+#    #+#             */
-/*   Updated: 2020/11/13 15:39:11 by sujeon           ###   ########.fr       */
+/*   Updated: 2020/11/13 15:49:57 by sujeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//1
 #include "get_next_line.h"
-
-//2
-#include <fcntl.h>	//open
-#include <stdio.h>	//printf
-#define BUFFER_SIZE 32
 
 static int	cnt_len(char *str)
 {
@@ -41,7 +35,7 @@ int			get_next_line(int fd, char **line)
 	len = 0;
 	if (!(src = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1))))
 		return (0);
-	ft_memset(line, '\0', BUFFER_SIZE + 1);
+	ft_memset(src, '\0', BUFFER_SIZE + 1);
 	read(fd, src, BUFFER_SIZE);
 	len = cnt_len(src);
 	printf("len : %d\n", len);
@@ -54,19 +48,4 @@ int			get_next_line(int fd, char **line)
 	backup = ft_strchr(src, '\n') + 1;
 	printf("line: %s\n", *line);
 	return (1);
-}
-
-int main()
-{
-	int		fd;
-	char	*line;
-	int		i = 4;
-
-	line = 0;
-	fd = open("test.txt", O_RDONLY);
-	while (i--)
-	{
-		get_next_line(fd, &line);
-		printf("line: %s\n", line);
-	}		
 }
