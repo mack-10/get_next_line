@@ -12,5 +12,7 @@ int main()
 	{
 		get_next_line(fd, &line);
 		printf("line: %s\n", line);
+		printf("\n-------------------\n\n");
+		ft_memset(line, 0, 15);
 	}		
 }
