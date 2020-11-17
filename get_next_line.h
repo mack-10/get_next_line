@@ -6,7 +6,7 @@
 /*   By: sujeon <sujeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 11:43:44 by sujeon            #+#    #+#             */
-/*   Updated: 2020/11/16 21:25:22 by sujeon           ###   ########.fr       */
+/*   Updated: 2020/11/17 18:45:41 by sujeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 //2 제출시 제거
 #include <fcntl.h>	//open
 #include <stdio.h>	//printf
-#define BUFFER_SIZE 32
+#define BUFFER_SIZE 7
 
 int			get_next_line(int fd, char **line);
 size_t		ft_strlen(const char *str);

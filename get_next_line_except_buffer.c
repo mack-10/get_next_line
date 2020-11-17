@@ -6,7 +6,7 @@
 /*   By: sujeon <sujeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 11:40:31 by sujeon            #+#    #+#             */
-/*   Updated: 2020/11/17 17:41:26 by sujeon           ###   ########.fr       */
+/*   Updated: 2020/11/17 16:35:12 by sujeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,60 +23,42 @@ static int	cnt_len(char *str)
 			break ;
 		str++;
 		len++;
+		
 	}
 	return (len);
-}
-
-void		free_line(char *str)
-{
-	free(str);
-	str = NULL;
 }
 
 int			get_next_line(int fd, char **line)
 {
 	static char	*backup;
 	char		*src;
-	char		*start;
 	int 		len;
-	int			n;
 
-	if (backup)
-	{
-		len = cnt_len(backup);
-		if (!(start = (char *)malloc(sizeof(char) * len + 1)))
-		{
-			free_line(start);
-			return (-1);
-		}
-		ft_strlcpy(start, src, len + 1);
-	}
-	while (1)
+	len = 0;
+	if (!backup)
 	{
 		if (!(src = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1))))
+			return (0);
+		ft_memset(src, 0, BUFFER_SIZE + 1);
+		if (read(fd, src, BUFFER_SIZE) < 0)
 			return (-1);
-		ft_memset(src, '\0', BUFFER_SIZE + 1);
-		if ((n = read(fd, src, BUFFER_SIZE)) < 0)
-			return (-1);
-		printf("after read: %s\n", src);
+		printf("after read : %s\n", src);
 		len = cnt_len(src);
-		if (!(start = (char *)malloc(sizeof(char) * len + 1)))
-		{
-			free_line(start);
-			return (-1);
-		}
-		ft_strlcpy(start, src, len + 1);
-		printf("line: %s\n", start);
-		if (ft_strchr(src, '\n'))
-		{
-			backup = ft_strchr(src, '\n') + 1;
-			break ;
-		}
-		else
-			start += BUFFER_SIZE + 1;
-	}
-	if (!n)
-		return (0);
+		printf("len : %d\n", len);
+		if (!(*line = (char *)malloc(sizeof(char) * len + 1)))
+			return (0);
+		ft_strlcpy(*line, src, len + 1);
+		backup = ft_strchr(src, '\n') + 1;
+	}		
 	else
-		return (1);
+	{
+		len = cnt_len(backup);
+		printf("len : %d\n", len);
+		if (!(*line = (char *)malloc(sizeof(char) * len + 1)))
+			return (0);
+		ft_strlcpy(*line, backup, len + 1);
+		if (backup)
+			backup = ft_strchr(backup, '\n') + 1;
+	}
+	return (1);
 }
