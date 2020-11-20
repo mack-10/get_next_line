@@ -5,78 +5,60 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: sujeon <sujeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/04 11:40:31 by sujeon            #+#    #+#             */
-/*   Updated: 2020/11/17 17:41:26 by sujeon           ###   ########.fr       */
+/*   Created: 2020/11/20 14:45:44 by sujeon            #+#    #+#             */
+/*   Updated: 2020/11/20 17:25:42 by sujeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static int	cnt_len(char *str)
+static int			find_n(char *backup)
 {
 	int len;
 
 	len = 0;
-	while (*str)
+	while (backup[len])
 	{
-		if (*str == '\n')
-			break ;
-		str++;
+		if (backup[len] == '\n')
+			return (len);
 		len++;
 	}
-	return (len);
+	return (0);
 }
 
-void		free_line(char *str)
+static int			put_value(char **line, char *backup[])
 {
-	free(str);
-	str = NULL;
+	int len;
+
+	len = find_n(*backup);
+	if (!len)
+		len = ft_strlen(*backup);
+	if (!(*line = ft_substr(*backup, 0, len)))
+	{
+		free(*line);
+		return (-1);
+	}
+	*backup += len + 1;
+	return (1);
 }
 
 int			get_next_line(int fd, char **line)
 {
-	static char	*backup;
-	char		*src;
-	char		*start;
-	int 		len;
+	static char	*backup[1024];
+	char		src[BUFFER_SIZE + 1];
 	int			n;
 
-	if (backup)
+	//1) BUFFER_SIZE가 EOF에 도달하지 못할경우. 반복적인 read.
+	while ((n = read(fd, src, BUFFER_SIZE)) > 0)
 	{
-		len = cnt_len(backup);
-		if (!(start = (char *)malloc(sizeof(char) * len + 1)))
-		{
-			free_line(start);
-			return (-1);
-		}
-		ft_strlcpy(start, src, len + 1);
+		src[n] = '\0';
+		backup[fd] = ft_strjoin(backup[fd], src);
+		if (find_n(backup[fd]))
+			return (put_value(line, &backup[fd]));
 	}
-	while (1)
-	{
-		if (!(src = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1))))
-			return (-1);
-		ft_memset(src, '\0', BUFFER_SIZE + 1);
-		if ((n = read(fd, src, BUFFER_SIZE)) < 0)
-			return (-1);
-		printf("after read: %s\n", src);
-		len = cnt_len(src);
-		if (!(start = (char *)malloc(sizeof(char) * len + 1)))
-		{
-			free_line(start);
-			return (-1);
-		}
-		ft_strlcpy(start, src, len + 1);
-		printf("line: %s\n", start);
-		if (ft_strchr(src, '\n'))
-		{
-			backup = ft_strchr(src, '\n') + 1;
-			break ;
-		}
-		else
-			start += BUFFER_SIZE + 1;
-	}
-	if (!n)
-		return (0);
-	else
-		return (1);
+	
+	//2) BUFFER_SIZE가 EOF에 도달할 경우.
+	if (put_value(line, &backup[fd]) == -1)
+		return (-1);
+	return (0);
 }
