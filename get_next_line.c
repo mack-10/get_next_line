@@ -6,13 +6,13 @@
 /*   By: sujeon <sujeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:45:44 by sujeon            #+#    #+#             */
-/*   Updated: 2020/11/20 17:25:42 by sujeon           ###   ########.fr       */
+/*   Updated: 2020/11/20 17:52:48 by sujeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static int			find_n(char *backup)
+static int		find_n(char *backup)
 {
 	int len;
 
@@ -26,7 +26,7 @@ static int			find_n(char *backup)
 	return (0);
 }
 
-static int			put_value(char **line, char *backup[])
+static int		put_value(char **line, char *backup[])
 {
 	int len;
 
@@ -42,13 +42,12 @@ static int			put_value(char **line, char *backup[])
 	return (1);
 }
 
-int			get_next_line(int fd, char **line)
+int				get_next_line(int fd, char **line)
 {
 	static char	*backup[1024];
 	char		src[BUFFER_SIZE + 1];
 	int			n;
 
-	//1) BUFFER_SIZE가 EOF에 도달하지 못할경우. 반복적인 read.
 	while ((n = read(fd, src, BUFFER_SIZE)) > 0)
 	{
 		src[n] = '\0';
@@ -56,8 +55,6 @@ int			get_next_line(int fd, char **line)
 		if (find_n(backup[fd]))
 			return (put_value(line, &backup[fd]));
 	}
-	
-	//2) BUFFER_SIZE가 EOF에 도달할 경우.
 	if (put_value(line, &backup[fd]) == -1)
 		return (-1);
 	return (0);

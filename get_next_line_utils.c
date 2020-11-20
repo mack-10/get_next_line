@@ -6,7 +6,7 @@
 /*   By: sujeon <sujeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/07 17:17:56 by sujeon            #+#    #+#             */
-/*   Updated: 2020/11/20 16:47:18 by sujeon           ###   ########.fr       */
+/*   Updated: 2020/11/20 17:49:25 by sujeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,10 @@ char	*ft_strjoin(char *s1, char const *s2)
 	int		s2_len;
 	char	*new_str;
 
-    if (!s1)
-        s1_len = 0;
-    else
-	    s1_len = ft_strlen(s1);
+	if (!s1)
+		s1_len = 0;
+	else
+		s1_len = ft_strlen(s1);
 	s2_len = ft_strlen(s2);
 	if (!(new_str = (char *)malloc(sizeof(char) * (s1_len + s2_len + 1))))
 		return (0);
