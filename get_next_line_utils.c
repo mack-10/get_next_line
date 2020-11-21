@@ -6,7 +6,7 @@
 /*   By: sujeon <sujeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/07 17:17:56 by sujeon            #+#    #+#             */
-/*   Updated: 2020/11/20 17:49:25 by sujeon           ###   ########.fr       */
+/*   Updated: 2020/11/22 04:32:49 by sujeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ size_t	ft_strlen(const char *str)
 	int len;
 
 	len = 0;
+	if (!str || !(*str))
+		return (0);
 	while (str[len])
 		len++;
 	return (len);
@@ -42,29 +44,23 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 	return (src_len);
 }
 
-size_t	ft_strlcat(char *dst, const char *src, size_t size)
+char	*ft_strdup(const char *s)
 {
-	size_t idx1;
-	size_t idx2;
-	size_t dst_len;
-	size_t src_len;
+	int		size;
+	int		idx;
+	char	*new_str;
 
-	dst_len = ft_strlen(dst);
-	src_len = ft_strlen(src);
-	idx1 = dst_len;
-	idx2 = 0;
-	while (src[idx2] && idx1 + idx2 + 1 < size)
+	idx = 0;
+	size = ft_strlen(s);
+	if (!(new_str = (char *)malloc(sizeof(char) * (size + 1))))
+		return (NULL);
+	while (idx < size)
 	{
-		dst[idx1 + idx2] = src[idx2];
-		idx2++;
+		new_str[idx] = s[idx];
+		idx++;
 	}
-	if (dst_len > size)
-		return (src_len + size);
-	else
-	{
-		dst[idx1 + idx2] = 0;
-		return (src_len + dst_len);
-	}
+	new_str[idx] = 0;
+	return (new_str);
 }
 
 char	*ft_strjoin(char *s1, char const *s2)
@@ -73,15 +69,14 @@ char	*ft_strjoin(char *s1, char const *s2)
 	int		s2_len;
 	char	*new_str;
 
-	if (!s1)
-		s1_len = 0;
-	else
-		s1_len = ft_strlen(s1);
+	s1_len = ft_strlen(s1);
 	s2_len = ft_strlen(s2);
 	if (!(new_str = (char *)malloc(sizeof(char) * (s1_len + s2_len + 1))))
 		return (0);
 	ft_strlcpy(new_str, s1, s1_len + 1);
-	ft_strlcat(new_str + s1_len, s2, s2_len + 1);
+	ft_strlcpy(new_str + s1_len, s2, s2_len + 1);
+	if (s1)
+		free(s1);
 	return (new_str);
 }
 
@@ -89,6 +84,8 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char *str;
 
+	if (!s || ft_strlen(s) <= (size_t)start)
+		return (ft_strdup(""));
 	if (!(str = (char *)malloc(sizeof(char) * (len + 1))))
 		return (NULL);
 	ft_strlcpy(str, s + start, len + 1);
