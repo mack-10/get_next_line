@@ -6,7 +6,7 @@
 /*   By: sujeon <sujeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 11:43:44 by sujeon            #+#    #+#             */
-/*   Updated: 2020/11/22 04:57:28 by sujeon           ###   ########.fr       */
+/*   Updated: 2020/11/22 15:46:29 by sujeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 
 
 int			get_next_line(int fd, char **line);
+void		free_p(char *p);
 size_t		ft_strlen(const char *str);
 size_t		ft_strlcpy(char *dst, const char *src, size_t size);
 char    	*ft_strdup(const char *s);

@@ -6,13 +6,13 @@
 /*   By: sujeon <sujeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:45:44 by sujeon            #+#    #+#             */
-/*   Updated: 2020/11/22 04:56:45 by sujeon           ###   ########.fr       */
+/*   Updated: 2020/11/22 15:46:32 by sujeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static void		free_p(char *p)
+void			free_p(char *p)
 {
 	free(p);
 	p = NULL;
