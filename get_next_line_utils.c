@@ -6,7 +6,7 @@
 /*   By: sujeon <sujeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/07 17:17:56 by sujeon            #+#    #+#             */
-/*   Updated: 2020/11/22 15:46:59 by sujeon           ###   ########.fr       */
+/*   Updated: 2020/12/02 23:20:13 by sujeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ size_t	ft_strlen(const char *str)
 	int len;
 
 	len = 0;
-	if (!str || !(*str))
+	if (!str)
 		return (0);
 	while (str[len])
 		len++;
@@ -44,7 +44,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 	return (src_len);
 }
 
-char	*ft_strdup(const char *s)
+char	*ft_strdup(char *s)
 {
 	int		size;
 	int		idx;
@@ -76,7 +76,7 @@ char	*ft_strjoin(char *s1, char const *s2)
 	ft_strlcpy(new_str, s1, s1_len + 1);
 	ft_strlcpy(new_str + s1_len, s2, s2_len + 1);
 	if (s1)
-		free_p(s1);
+		free_p(&s1);
 	return (new_str);
 }
 

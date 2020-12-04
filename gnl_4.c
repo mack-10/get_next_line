@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   gnl_4.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sujeon <sujeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/02 02:17:24 by sujeon            #+#    #+#             */
-/*   Updated: 2020/12/04 20:10:28 by sujeon           ###   ########.fr       */
+/*   Created: 2020/11/20 14:45:44 by sujeon            #+#    #+#             */
+/*   Updated: 2020/12/02 16:48:35 by sujeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,39 +23,23 @@ static int		find_n(char *src)
 	int len;
 
 	len = 0;
-	if (src[0] == '\n')
-		return (1);
 	while (src[len])
 	{
-		if (src[len] == '\n')
+		if (src[0] == '\n')
+			return (1);
+		else if (src[len] == '\n')
 			return (len);
 		len++;
 	}
 	return (0);
 }
 
-static int		last_line(char **line, char **backup)
+static int		put_value(char **line, char *src, char **backup)
 {
 	int len;
+	int idx;
 
-	len = ft_strlen(*backup);
-	*line = ft_substr(*backup, 0, len);
-	free_p(backup);
-	return (0);
-}
-
-static int		put_line(char **line, char **backup)
-{
-	int		len;
-	char	*src;
-
-	if (!find_n(*backup))
-		return (last_line(line, backup));
-	len = 0;
-	src = ft_strdup(*backup);
-	free_p(backup);
-	while ((src[len] != '\n') && src[len])
-		len++;
+	idx = 0;
 	if (src[0] == '\n')
 	{
 		*line = ft_strdup("");
@@ -64,34 +48,59 @@ static int		put_line(char **line, char **backup)
 	}
 	else
 	{
+		len = find_n(src);
+		if (!len)
+			len = ft_strlen(src);
 		*line = ft_substr(src, 0, len);
-		if (src[len] == '\n')
-			*backup = ft_strdup(src + len + 1);
+		while (len-- && src[idx])
+			idx++;
+		if (src[idx])
+			*backup = ft_strdup(src + idx + 1);
 	}
 	free_p(&src);
 	return (1);
 }
 
-int				get_next_line(int fd, char **line)
+static int		if_end(char **line, char *src, char **backup, int n)
 {
-	static char	*backup[1024];
-	char		src[BUFFER_SIZE + 1];
-	int			n;
-
-	while ((n = read(fd, src, BUFFER_SIZE)) > 0)
-	{
-		src[n] = 0;
-		backup[fd] = ft_strjoin(backup[fd], src);
-		if (find_n(backup[fd]))
-			return (put_line(line, &backup[fd]));
-	}
 	if (n == -1)
 		return (-1);
-	if (backup[fd])
-		return (put_line(line, &backup[fd]));
+	else if (src)
+	{
+		put_value(line, src, backup);
+		if (!backup)
+			return (0);
+		return (1);
+	}
 	else
 	{
 		*line = ft_strdup("");
 		return (0);
 	}
+	
+}
+
+int				get_next_line(int fd, char **line)
+{
+	static char	*backup[1024];
+	char		tmp[BUFFER_SIZE + 1];
+	char		*src;
+	int			n;
+
+	if ((fd < 0) || (BUFFER_SIZE <= 0))
+		return (-1);
+	src = NULL;
+	if (backup[fd])
+	{
+		src = ft_strdup(backup[fd]);
+		free_p(&backup[fd]);
+	}
+	while ((n = read(fd, tmp, BUFFER_SIZE)) > 0)
+	{
+		tmp[n] = 0;
+		src = ft_strjoin(src, tmp);
+		if (find_n(src))
+			return (put_value(line, src, &backup[fd]));
+	}
+	return (if_end(line, src, &backup[fd], n));
 }

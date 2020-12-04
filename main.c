@@ -6,17 +6,28 @@ int main()
 {
 	int		fd;
 	char	*line;
-	int		i = 4;
+	int		i = 1;
+	int		n;
+	char	src[1000];
 
-	line = 0;
-	fd = open("test.txt", O_RDONLY);
-	while (i--)
+	//fd = 180;
+	fd = open("42TESTERS-GNL/files/empty_lines", O_RDONLY);
+	//fd = open("test.txt", O_RDONLY);
+	
+	//01
+	line = NULL;
+	while ((n = get_next_line(fd, &line)) != 0)
 	{
-		printf("gnl: %d\n", get_next_line(fd, &line));
-		printf("line: %s\n", line);
-		free(line);
-		line = NULL;
-		if (i > 0)
-			printf("\n--------------------\n\n");
-	}	
+		printf("%2d: [%d] %s\n", i, n, line);
+		free_p(&line);
+		i++;
+	}
+	printf("%2d: [%d] %s\n", i, n, line);
+	free_p(&line);
+
+	//02
+	/*
+	while (read(fd, src, 1000))
+		;
+	printf("%s\n", src);*/
 }
