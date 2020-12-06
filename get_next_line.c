@@ -6,7 +6,7 @@
 /*   By: sujeon <sujeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 02:17:24 by sujeon            #+#    #+#             */
-/*   Updated: 2020/12/06 02:28:13 by sujeon           ###   ########.fr       */
+/*   Updated: 2020/12/06 19:35:13 by sujeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ int				get_next_line(int fd, char **line)
 	char		src[BUFFER_SIZE + 1];
 	int			n;
 
+	if ((BUFFER_SIZE <= 0) || (fd < 0))
+		return (-1);
 	while ((n = read(fd, src, BUFFER_SIZE)) > 0)
 	{
 		src[n] = 0;
