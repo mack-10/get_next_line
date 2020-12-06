@@ -1,4 +1,4 @@
-42TESTERS-GNL
-cmake-build-debug
+42TESTERS-GNL/
+cmake-build-debug/
 CMakeLists.txt
-.idea
+.idea/
