@@ -1,4 +1,4 @@
 42TESTERS-GNL
-cmake*
+cmake-build-debug
 CMakeLists.txt
 .idea
