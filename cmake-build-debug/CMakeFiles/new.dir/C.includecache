@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/user/gnl/get_next_line.h
+unistd.h
+-
+stdlib.h
+-
+stddef.h
+-
+fcntl.h
+-
+stdio.h
+-
+
+/home/user/gnl/main.c
+get_next_line.h
+/home/user/gnl/get_next_line.h
+

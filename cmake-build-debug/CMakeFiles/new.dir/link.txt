@@ -1,0 +1,1 @@
+/usr/bin/cc -g CMakeFiles/new.dir/get_next_line.c.o CMakeFiles/new.dir/main.c.o CMakeFiles/new.dir/get_next_line_utils.c.o -o new 

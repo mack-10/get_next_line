@@ -1,7 +1,5 @@
 #include "get_next_line.h"
 
-//gnl
-
 int main()
 {
 	int		fd;
@@ -11,9 +9,9 @@ int main()
 	char	src[1000];
 
 	//fd = 180;
-	fd = open("42TESTERS-GNL/files/empty_lines", O_RDONLY);
-	//fd = open("test.txt", O_RDONLY);
-	
+	fd = open("/home/user/gnl/42TESTERS-GNL/files/alphabet", O_RDONLY);
+	//fd = open("/home/user/gnl/test.txt", O_RDONLY);
+
 	//01
 	line = NULL;
 	while ((n = get_next_line(fd, &line)) != 0)

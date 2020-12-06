@@ -6,7 +6,7 @@
 /*   By: sujeon <sujeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 02:17:24 by sujeon            #+#    #+#             */
-/*   Updated: 2020/12/04 20:10:28 by sujeon           ###   ########.fr       */
+/*   Updated: 2020/12/06 02:28:13 by sujeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,11 @@ static int		put_line(char **line, char **backup)
 	int		len;
 	char	*src;
 
-	if (!find_n(*backup))
+	len = find_n(*backup);
+	if (!len)
 		return (last_line(line, backup));
-	len = 0;
 	src = ft_strdup(*backup);
 	free_p(backup);
-	while ((src[len] != '\n') && src[len])
-		len++;
 	if (src[0] == '\n')
 	{
 		*line = ft_strdup("");
