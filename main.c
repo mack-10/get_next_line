@@ -17,13 +17,13 @@ int main()
 
 
 	//fd = 180;
-	//fd = open("/home/user/get_next_line/42TESTERS-GNL/files/alphabet", O_RDONLY);
+	fd = open("/home/user/get_next_line/42TESTERS-GNL/files/alphabet", O_RDONLY);
 	//fd = open("/home/user/get_next_line/test.txt", O_RDONLY);
-	fd1 = open("/home/user/get_next_line/42TESTERS-GNL/files/alphabet", O_RDONLY);
-	fd2 = open("/home/user/get_next_line/42TESTERS-GNL/files/empty_lines", O_RDONLY);
+	//fd1 = open("/home/user/get_next_line/42TESTERS-GNL/files/alphabet", O_RDONLY);
+	//fd2 = open("/home/user/get_next_line/42TESTERS-GNL/files/empty_lines", O_RDONLY);
 
 	//01
-	/*line = NULL;
+	line = NULL;
 	while ((n = get_next_line(fd, &line)) > 0)
 	{
 		printf("%2d: [%d] %s\n", i, n, line);
@@ -36,7 +36,7 @@ int main()
 	{
 		printf("%2d: [%d] %s\n", i, n, line);
 		free_p(&line);
-	}*/
+	}
 
 	//02
 	//line의 주솟값이 NULL
@@ -46,7 +46,7 @@ int main()
 
 	//03
 	//여러개의 fd
-	while (n1 || n2)
+	/*while (n1 || n2)
 	{
 		if ((n1 = get_next_line(fd1, &line)) > 0)
 		{
@@ -72,5 +72,5 @@ int main()
 			free_p(&line);
 			j = 0;
 		}
-	}
+	}*/
 }
